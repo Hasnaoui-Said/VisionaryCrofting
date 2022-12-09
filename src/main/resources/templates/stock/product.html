@@ -1,0 +1,165 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visionary Crofting</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js">
+    <style>
+        .section-header{
+            position: fixed;
+            width: 100%;
+            z-index: 10;
+        }
+        .section-header *{
+            position: relative;
+        }
+        main{
+            position: absolute;
+            top: 103px;
+        }
+        main .content {
+            position: relative;
+        }
+        .app-color{
+            color: #4d0101;
+        }
+        .app-orange{
+            color: #e35300;
+        }
+        .app-dark-bleu{
+            color: #445268;
+        }
+        .app-outline{
+            outline: solid 1px #4d0101
+        }
+        .app-btn{
+            color: #4d0101 !important;
+            outline: #4d0101 solid 1px !important;
+            background-color: white !important;
+            border-radius: 2px !important;
+        }
+        .app-bg{
+            background-color: #4d0101;
+        }
+        .app-bg-orange{
+            background-color: #e35300;
+        }
+        .app-bg-dark-bleu{
+            background-color: #445268;
+        }
+        .app-nav-2{
+            border-bottom: #4d0101 solid .2px;
+        }
+    </style>
+</head>
+<body>
+<header class="section-header">
+    <nav class="navbar navbar-expand p-0 app-bg" >
+        <div class="container-fluid">
+            <ul class="navbar-nav d-none d-md-flex mr-auto text-white">
+                <li class="nav-item"><a class="nav-link text-white" href="/stock" data-abc="true">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/stock/product" data-abc="true">Product</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/stock/offer" data-abc="true">Offer</a></li>
+            </ul>
+            <ul class="navbar-nav d-flex align-items-center">
+                <li class="nav-item">
+                    <div class="d-flex flex-row">
+                        <img src="https://i.imgur.com/EYFtR83.jpg" class="rounded-circle" width="30">
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white" data-abc="true"><span>hasnaoui said</span><i class='bx bxs-chevron-down'></i></a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <nav class="navbar bg-white app-nav-2">
+        <div class="container">
+            <h2 class="app-color">Logo</h2>
+            <form class="" role="search">
+                <div class="input-group">
+                    <input class="form-control me-2 app-outline" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-sm app-btn" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<main>
+<div class="content">
+    <div class="container">
+
+        <div class="d-flex justify-content-end align-items-center m-4">
+            <div>
+                <button type="button" onclick="" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+
+        <div class="" id="formCreateActivity">
+            <div class="card p-4 mb-3">
+                <div class="modal-body">
+                    <form action="activity" method="post">
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" aria-describedby="titleHelp">
+                                <div id="titleHelps" class="form-text d-none">error</div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" placeholder="Leave a comment here" id="description" name="description"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card p-4 m-4">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <th scope="col">#</th>
+                        <th scope="col">ref</th>
+                        <th scope="col">prix</th>
+                        <th scope="col">quantity</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">description</th>
+                        <th scope="col">Stock name</th>
+                        <th scope="col" colspan="2" class="text-end">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p:${productList}">
+                            <td th:text="${p.getId()}"></td>
+                            <td th:text="${p.getRef()}"></td>
+                            <td th:text="${p.getPrix()}"></td>
+                            <td th:text="${p.getQuantity()}"></td>
+                            <td th:text="${p.getCategory()}"></td>
+                            <td th:text="${p.getDescription()}"></td>
+                            <td th:text="${p.getStock().getName()}"></td>
+                            <td colspan="2">
+                                <div class="d-flex">
+                                    <a href="#">update</a>
+                                    <a href="#">infos</a>
+                                    <a href="#">delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</main>
+</body>
+</html>
