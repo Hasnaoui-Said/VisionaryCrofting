@@ -113,17 +113,17 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", ref='" + ref + '\'' +
-                ", name='" + name + '\'' +
-                ", prix='" + prix + '\'' +
-                ", description='" + description + '\'' +
-                ", url_image='" + url_image + '\'' +
-                ", quantity=" + quantity +
-                ", stock=" + stock +
-                ", category=" + category +
-                ", stock=" + stock +
+        return "Product:{" +
+                "id:" + id +
+                ", ref:'" + ref + '\'' +
+                ", name:'" + name + '\'' +
+                ", prix:'" + prix + '\'' +
+                ", description:'" + description + '\'' +
+                ", url_image:'" + url_image + '\'' +
+                ", quantity:" + quantity +
+                ", stock:" + stock +
+                ", category:" + category +
+                ", stock:" + stock +
                 '}';
     }
 }

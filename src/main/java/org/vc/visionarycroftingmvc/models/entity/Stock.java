@@ -97,13 +97,13 @@ public class Stock implements Serializable {
 
     @Override
     public String toString() {
-        return "Stock{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
+        return "Stock:{" +
+                "id:" + id +
+                ", name:'" + name + '\'' +
+                ", address:'" + address + '\'' +
+                ", email:'" + email + '\'' +
+                ", password:'" + password + '\'' +
+                ", phone:'" + phone + '\'' +
                 '}';
     }
 }
