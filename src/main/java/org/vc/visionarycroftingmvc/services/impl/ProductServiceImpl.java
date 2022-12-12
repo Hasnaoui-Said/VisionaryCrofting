@@ -1,5 +1,7 @@
 package org.vc.visionarycroftingmvc.services.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.vc.visionarycroftingmvc.models.entity.Product;
 import org.vc.visionarycroftingmvc.models.entity.Stock;
 import org.vc.visionarycroftingmvc.enumeration.Category;
@@ -89,8 +91,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAll() {
-        return productDao.findAll();
+    public Page<Product> findAll(PageRequest pageRequest) {
+        return productDao.findAll(pageRequest);
     }
 
     @Deprecated

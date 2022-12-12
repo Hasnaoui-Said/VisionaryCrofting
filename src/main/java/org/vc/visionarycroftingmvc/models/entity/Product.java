@@ -16,6 +16,9 @@ public class Product implements Serializable {
     private String name;
     private double prix;
     private String description;
+    private String url_image;
+
+
     private int quantity;
     @ManyToOne
     private Stock stock;
@@ -27,6 +30,13 @@ public class Product implements Serializable {
     public Product() {
     }
 
+    public String getUrl_image() {
+        return url_image;
+    }
+
+    public void setUrl_image(String url_image) {
+        this.url_image = url_image;
+    }
     public Long getId() {
         return id;
     }
@@ -109,6 +119,7 @@ public class Product implements Serializable {
                 ", name='" + name + '\'' +
                 ", prix='" + prix + '\'' +
                 ", description='" + description + '\'' +
+                ", url_image='" + url_image + '\'' +
                 ", quantity=" + quantity +
                 ", stock=" + stock +
                 ", category=" + category +

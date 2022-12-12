@@ -1,0 +1,284 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visionary Crofting</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js">
+  <style>
+    .section-header{
+      position: fixed;
+      width: 100%;
+      z-index: 10;
+    }
+    .section-header *{
+      position: relative;
+    }
+    main{
+      position: absolute;
+      top: 103px;
+      width: 100%;
+    }
+    main .content, footer {
+      position: relative;
+      width: 100%;
+    }
+    .app-color{
+      color: #4d0101;
+    }
+    .app-orange{
+      color: #e35300;
+    }
+    .app-dark-bleu{
+      color: #445268;
+    }
+    .app-outline{
+      outline: solid 1px #4d0101
+    }
+    .app-btn{
+      color: #4d0101 !important;
+      outline: #4d0101 solid 1px !important;
+      background-color: white !important;
+      border-radius: 2px !important;
+    }
+    .app-bg{
+      background-color: #4d0101;
+    }
+    .app-bg-orange{
+      background-color: #e35300;
+    }
+    .app-bg-dark-bleu{
+      background-color: #445268;
+    }
+    .app-nav-2{
+      border-bottom: #4d0101 solid .2px;
+    }
+  </style>
+</head>
+<body>
+<header class="section-header">
+  <nav class="navbar navbar-expand py-0 px-2 app-bg" >
+    <div class="nav-item"><a class="nav-link text-white" href="/">logo</a></div>
+    <div class="container-fluid">
+      <ul class="navbar-nav d-none d-md-flex mr-auto text-white">
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-abc="true">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-abc="true">A propos</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-abc="true">Contact</a></li>
+      </ul>
+      <ul class="navbar-nav d-flex align-items-center">
+        <li class="nav-item d-none">
+          <div class="d-flex flex-row">
+            <img src="https://i.imgur.com/EYFtR83.jpg" class="rounded-circle" width="30">
+          </div>
+        </li>
+        <li class="nav-item" th:if="${session.user == null}">
+          <a href="/sign-in" class="nav-link d-flex align-items-center text-white" data-abc="true">
+            <span>Sign In</span><i class='bx bxs-chevron-down'></i>
+          </a>
+        </li>
+        <li class="nav-item" th:if="${session.user == null}">
+          <a href="/login" class="nav-link d-flex align-items-center text-white" data-abc="true">
+            <span>LogIn</span><i class='bx bxs-chevron-down'></i>
+          </a>
+        </li>
+        <li class="nav-item" th:if="${session.user != null}">
+          <a href="/profile" class="nav-link d-flex align-items-center text-white" data-abc="true">
+            <span th:text="${session.user.getEmail()}"></span><i class='bx bxs-chevron-down'></i>
+          </a>
+        </li>
+        <li class="nav-item" th:if="${session.user != null}">
+          <a href="/log-out" class="nav-link d-flex align-items-center text-white" data-abc="true">
+            <span>logOut</span><i class='bx bxs-chevron-down'></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/shop" class="nav-link d-flex align-items-center text-white" data-abc="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-dash" viewBox="0 0 16 16">
+              <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/>
+              <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+            </svg>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+  <nav class="navbar bg-white app-nav-2">
+    <div class="container">
+      <h2 class="app-color">Logo</h2>
+      <form class="" role="search">
+        <div class="input-group">
+          <input class="form-control me-2 app-outline" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-sm app-btn" type="submit">Search</button>
+        </div>
+      </form>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="content">
+    <div class="container list-shop">
+
+      <section style="background-color: #eee;">
+        <div class="container py-5">
+          <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+              <div class="card shadow-0 border rounded-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                      <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(4).webp"
+                             class="w-100" />
+                        <a href="#!">
+                          <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                      <h5>Quant trident shirts</h5>
+                      <div class="d-flex flex-row">
+                        <div class="text-danger mb-1 me-2">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <span>310</span>
+                      </div>
+                      <div class="mt-1 mb-0 text-muted small">
+                        <span>100% cotton</span>
+                        <span class="text-primary"> • </span>
+                        <span>Light weight</span>
+                        <span class="text-primary"> • </span>
+                        <span>Best finish<br /></span>
+                      </div>
+                      <div class="mb-2 text-muted small">
+                        <span>Unique design</span>
+                        <span class="text-primary"> • </span>
+                        <span>For men</span>
+                        <span class="text-primary"> • </span>
+                        <span>Casual<br /></span>
+                      </div>
+                      <p class="text-truncate mb-4 mb-md-0">
+                        There are many variations of passages of Lorem Ipsum available, but the
+                        majority have suffered alteration in some form, by injected humour, or
+                        randomised words which don't look even slightly believable.
+                      </p>
+                    </div>
+                    <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                      <div class="d-flex flex-row align-items-center mb-1">
+                        <h4 class="mb-1 me-1">$13.99</h4>
+                        <span class="text-danger"><s>$20.99</s></span>
+                      </div>
+                      <h6 class="text-success">Free shipping</h6>
+                      <div class="d-flex flex-column mt-4">
+                        <button class="btn btn-primary btn-sm" type="button">Details</button>
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+                          Add to wishlist
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="section-footer app-bg-dark-bleu text-white mt-5 py-5">
+    <div class="container">
+      <section class="footer-top padding-y">
+        <div class="row">
+          <aside class="col-md-4">
+            <article class="mr-3">
+              <h5 class="title">About</h5>
+              <p>Some short text about company like You might remember the Dell computer commercials in which a youth reports.</p>
+              <ul class="list-icon">
+                <li><i class="icon fa fa-map-marker"></i> 9870 St Vincent Place, Glasgow, DC 45 Fr 45.</li>
+                <li><i class="icon fa fa-phone"></i> +1 (800) 123 4568</li>
+                <li><i class="icon fa fa-envelope"></i>
+                  <a href="mailto:saidhasnaoui@gmail.com">
+                    <i class="icon fa fa-envelope">envelope</i>
+                  </a>
+                </li>
+              </ul>
+            </article>
+          </aside>
+          <aside class="col-sm-3 col-md-2">
+            <h5 class="title">Information</h5>
+            <ul class="list-unstyled">
+              <li> <a href="#">About us</a></li>
+              <li> <a href="#">Career</a></li>
+              <li> <a href="#">Find a store</a></li>
+              <li> <a href="#">Rules and terms</a></li>
+              <li> <a href="#">Sitemap</a></li>
+            </ul>
+          </aside>
+          <aside class="col-sm-3 col-md-2">
+            <h5 class="title">My Account</h5>
+            <ul class="list-unstyled">
+              <li> <a href="#"> Contact us</a></li>
+              <li> <a href="#">Money refund</a></li>
+              <li> <a href="#">Order status</a></li>
+              <li> <a href="#">Shipping info</a></li>
+              <li> <a href="#">Open dispute</a></li>
+            </ul>
+          </aside>
+          <aside class="col-sm-3  col-md-2">
+            <h5 class="title">Service</h5>
+            <ul class="list-unstyled">
+              <li> <a href="#">Returns</a></li>
+              <li> <a href="#">Product Support</a></li>
+              <li> <a href="#">FAQ</a></li>
+              <li> <a href="#">How To Buy</a></li>
+              <li> <a href="#">Payment Method</a></li>
+            </ul>
+          </aside>
+          <aside class="col-sm-3  col-md-2">
+            <h5 class="title">Social</h5>
+            <ul class="list-unstyled">
+              <li> <a href="#"> Facebook </a></li>
+              <li> <a href="#"> Twitter </a></li>
+              <li> <a href="#"> Instagram </a></li>
+              <li> <a href="#"> Youtube </a></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+      <section class="footer-bottom row border-top-white">
+        <div class="col-md-2">
+          <p class="text-muted
+                "> &copy 2019 Visionary Crofting </p>
+
+        </div>
+        <div class="col-md-8 text-md-center">
+                <span  class="px-2">
+                    <a href="#" class="text-muted">Terms and condition</a>
+                </span>
+          <span  class="px-2">
+                    <a href="#" class="text-muted">Privacy policy</a>
+                </span>
+        </div>
+        <div class="col-md-2 text-md-right text-muted">
+          <i class="fab fa-lg fa-cc-visa"></i>
+          <i class="fab fa-lg fa-cc-paypal"></i>
+          <i class="fab fa-lg fa-cc-mastercard"></i>
+        </div>
+      </section>
+    </div>
+  </footer>
+
+
+</main>
+</body>
+</html>

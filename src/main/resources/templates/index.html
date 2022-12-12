@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,9 +20,11 @@
         main{
             position: absolute;
             top: 103px;
+            width: 100%;
         }
-        main .content {
+        main .content, footer {
             position: relative;
+            width: 100%;
         }
         .app-color{
             color: #4d0101;
@@ -58,7 +60,8 @@
 </head>
 <body>
 <header class="section-header">
-    <nav class="navbar navbar-expand p-0 app-bg" >
+    <nav class="navbar navbar-expand py-0 px-2 app-bg" >
+        <div class="nav-item"><a class="nav-link text-white" href="/">logo</a></div>
         <div class="container-fluid">
             <ul class="navbar-nav d-none d-md-flex mr-auto text-white">
                 <li class="nav-item"><a class="nav-link text-white" href="#" data-abc="true">Home</a></li>
@@ -66,13 +69,38 @@
                 <li class="nav-item"><a class="nav-link text-white" href="#" data-abc="true">Contact</a></li>
             </ul>
             <ul class="navbar-nav d-flex align-items-center">
-                <li class="nav-item">
+                <li class="nav-item d-none">
                     <div class="d-flex flex-row">
                         <img src="https://i.imgur.com/EYFtR83.jpg" class="rounded-circle" width="30">
                     </div>
                 </li>
+                <li class="nav-item" th:if="${session.user == null}">
+                    <a href="/sign-in" class="nav-link d-flex align-items-center text-white" data-abc="true">
+                        <span>Sign In</span><i class='bx bxs-chevron-down'></i>
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${session.user == null}">
+                    <a href="/login" class="nav-link d-flex align-items-center text-white" data-abc="true">
+                        <span>LogIn</span><i class='bx bxs-chevron-down'></i>
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${session.user != null}">
+                    <a href="/profile" class="nav-link d-flex align-items-center text-white" data-abc="true">
+                        <span th:text="${session.user.getEmail()}"></span><i class='bx bxs-chevron-down'></i>
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${session.user != null}">
+                    <a href="/log-out" class="nav-link d-flex align-items-center text-white" data-abc="true">
+                        <span>logOut</span><i class='bx bxs-chevron-down'></i>
+                    </a>
+                </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link d-flex align-items-center text-white" data-abc="true"><span>hasnaoui said</span><i class='bx bxs-chevron-down'></i></a>
+                    <a href="/shop" class="nav-link d-flex align-items-center text-white" data-abc="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-dash" viewBox="0 0 16 16">
+                            <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/>
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                    </a>
                 </li>
 
             </ul>
@@ -92,55 +120,79 @@
 </header>
 
 <main>
-<div class="content">
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident tempore eum harum aspernatur, hic aut velit? Saepe quas animi molestiae suscipit adipisci unde, consequatur explicabo dolor molestias quisquam laudantium illum!
-</div>
+    <div class="content">
+        <div class="container list-product">
+
+            <section style="background-color: #eee;">
+                <div class="container py-5">
+                    <!--List Products-->
+                    <div th:each="product:${listProduct}" class="row justify-content-center mb-3">
+                        <div class="col-md-12 col-xl-10">
+                            <div class="card shadow-0 border rounded-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                                <img th:src="${product.getUrl_image()}"
+                                                     class="w-100" />
+                                                <a href="#!">
+                                                    <div class="hover-overlay">
+                                                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <h5 th:text="${product.getName()}"></h5>
+                                            <div class="d-flex flex-row">
+                                                <div class="text-danger mb-1 me-2">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <span th:text="${product.getQuantity()}"></span>
+                                            </div>
+                                            <div class="mt-1 mb-0 text-muted small">
+                                                <span>100% cotton</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>Light weight</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>Best finish<br /></span>
+                                            </div>
+                                            <div class="mb-2 text-muted small">
+                                                <span>Unique design</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>For men</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>Casual<br /></span>
+                                            </div>
+                                            <p th:text="${product.getDescription()}" class="text-truncate mb-4 mb-md-0">
+
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                            <div class="d-flex flex-row align-items-center mb-1">
+                                                <h4 class="mb-1 me-1" th:text="${'$'+ product.getPrix()}"></h4>
+                                                <span class="text-danger" th:text="${'$'+ product.getPrix() + 115}"><s></s></span>
+                                            </div>
+                                            <h6 class="text-success">Free shipping</h6>
+                                            <div class="d-flex flex-column mt-4">
+                                                <button class="btn btn-primary btn-sm" type="button">Details</button>
+                                                <button th:onclick="addToCar()" class="btn btn-outline-primary btn-sm mt-2" type="button">
+                                                    Add to cart
+                                                </button>rtyuiop
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 
 <footer class="section-footer app-bg-dark-bleu text-white mt-5 py-5">
     <div class="container">
@@ -227,5 +279,19 @@
 
 
 </main>
+
+<script>
+    function addToCar(){
+        const command = {
+            commandItem:{
+                product:{
+                    ref: "p1"
+                },
+                quantity: "p1",
+            }
+        }
+        localStorage.setItem('cartProducts', JSON.stringify(command))
+    }
+</script>
 </body>
 </html>

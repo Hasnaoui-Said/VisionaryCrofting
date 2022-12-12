@@ -6,8 +6,17 @@ public class ProductVo {
     private String prixMax;
     private String prixMin;
     private String category;
+    private String url_image;
 
     public ProductVo() {
+    }
+
+    public String getUrl_image() {
+        return url_image;
+    }
+
+    public void setUrl_image(String url_image) {
+        this.url_image = url_image;
     }
 
     public String getRef() {

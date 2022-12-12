@@ -1,5 +1,7 @@
 package org.vc.visionarycroftingmvc.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.vc.visionarycroftingmvc.models.entity.Product;
 import org.vc.visionarycroftingmvc.enumeration.Category;
 import org.vc.visionarycroftingmvc.voDTO.ProductVo;
@@ -26,7 +28,7 @@ public interface ProductService{
 
     int deleteByRef(String ref);
 
-    List<Product> findAll();
+    Page<Product> findAll(PageRequest request);
 
     Product getOne(Long aLong);
 

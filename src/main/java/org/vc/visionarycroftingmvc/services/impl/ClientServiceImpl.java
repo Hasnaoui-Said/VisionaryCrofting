@@ -6,6 +6,8 @@ import org.vc.visionarycroftingmvc.services.ClientService;
 import org.vc.visionarycroftingmvc.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.vc.visionarycroftingmvc.util.TransfertDto;
+import org.vc.visionarycroftingmvc.voDTO.ClientDto;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -42,11 +44,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client save(Client client) {
+    public ClientDto save(ClientDto client) {
+        if (client == null) return null;
         if (this.findByEmail(client.getEmail()) != null || StringUtil.isEmpty(client.getEmail()))
             return null;
 //            throw new BadRequestException("Email is token!!");
-        return clientDao.save(client);
+        Client client1 = TransfertDto.clientDtoToCleint(client);
+        Client clientSave = clientDao.save(client1);
+        return TransfertDto.clientToDto(clientSave);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
     public Client update(Client client) {
         if (!this.existsByEmail(client.getEmail()))
             return null;
-//            throw new BadRequestException("Client whit this parameter not found!!");
+//            throw new BadRequestException("Client with this parameter not found!!");
         Client byEmail = this.findByEmail(client.getEmail());
         if (!StringUtil.isEmpty(client.getPassword()))
             byEmail.setPassword(client.getPassword());
@@ -68,5 +73,13 @@ public class ClientServiceImpl implements ClientService {
         return clientDao.existsByEmail(e);
     }
 
-
+    @Override
+    public Client login(String login, String psw){
+        if (!this.existsByEmail(login)){
+            return null;
+        }
+        Client client = this.findByEmail(login);
+        if (!client.getPassword().equals(psw)) return null;
+        return client;
+    }
 }
