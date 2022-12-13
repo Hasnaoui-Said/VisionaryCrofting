@@ -81,7 +81,7 @@
                 </li>
                 <li class="nav-item" th:if="${session.user == null}">
                     <a href="/login" class="nav-link d-flex align-items-center text-white" data-abc="true">
-                        <span  id="user" >LogIn</span><i class='bx bxs-chevron-down'></i>
+                        <span>LogIn</span><i class='bx bxs-chevron-down'></i>
                     </a>
                 </li>
                 <li class="nav-item" th:if="${session.user != null}">
@@ -179,7 +179,7 @@
                                             <h6 class="text-success">Free shipping</h6>
                                             <div class="d-flex flex-column mt-4">
                                                 <button class="btn btn-primary btn-sm" type="button">Details</button>
-                                                <button onclick="addToCar(this)" class="btn btn-outline-primary btn-sm mt-2" type="button">
+                                                <button th:attr="data-id=${product.getRef()},data-name=${product.getName()}" onclick="fetchProduct(this)"  class="btn btn-outline-primary btn-sm mt-2" type="button">
                                                     Add to cart
                                                 </button>
                                                 <div class="d-none">
@@ -288,6 +288,35 @@
 
 <script>
 
+    function fetchProduct(e){
+        const itemSet = (localStorage.getItem('cartProductsRef') === null);
+        if (itemSet)  {
+            console.log("Create carte Ref in local storage")
+            // const cartProductsRef = {
+            //     refs: []
+            // };
+            const cartProductsRef = {
+                products: []
+            };
+            localStorage.setItem('cartProductsRef', JSON.stringify(cartProductsRef));
+        }
+
+        const cartProductsRef = JSON.parse(localStorage.getItem('cartProductsRef'));
+
+        let message = "";
+        let productRef = e.dataset.id;
+        cartProductsRef.products.forEach(product=>{
+            if (product.ref === productRef){
+                message = "Item already in cart!!";
+            }
+        });
+        if (message !== "")
+            return alert(message);
+        if (confirm("Are You sure ? you want add to Cart?!!")){
+            cartProductsRef.products.push({ref:productRef, quantity:1});
+            localStorage.setItem('cartProductsRef', JSON.stringify(cartProductsRef));
+        }
+    }
 
     function addToCar(e){
         const itemSet = (localStorage.getItem('cartProducts') === null);
@@ -295,9 +324,9 @@
             console.log("Create carte in local storage")
             const myCommand = {
                 client: {
-                    email: document.getElementById("user").innerText,
-                    prixTotal: 0
+                    email: null
                 },
+                prixTotal: 0,
                 commandItems: []
             };
             localStorage.setItem('cartProducts', JSON.stringify(myCommand));
@@ -312,29 +341,28 @@
                 name: elements[1].innerText,
                 prix: elements[2].innerText,
                 url_image: elements[3].innerText,
-                quantity: 1,
                 ref: elements[0].innerText
             },
             quantity: 1,
             ref: ""
         }
+        let message = "";
         command.commandItems.forEach(item=>{
-            console.log("commandItem nv " + commandItem.product.ref)
-            console.log("item " + item.product.ref)
-            console.log("test " + commandItem.product.ref === item.product.ref)
             if (commandItem.product.ref === item.product.ref)  {
-                console.log("Item already in cart!!")
-                return alert("Item already in cart!!");
+                message = "Item already in cart!!";
             }
         });
-        command.prixTotal += commandItem.prix * commandItem.quantity;
+        if (message !== "")
+            return alert(message);
+        console.log("Price Product " + commandItem.product.prix, typeof Number(commandItem.product.prix))
+        console.log("Quantity item " + commandItem.quantity, typeof  commandItem.quantity)
+        console.log("Price command after " + command.prixTotal, typeof command.prixTotal)
+        commandItem.prix += Number(commandItem.product.prix) * commandItem.quantity;
+        command.prixTotal += Number(commandItem.prix);
+        console.log("Price command before " + command.prixTotal)
         command.commandItems.push(commandItem);
         console.log("Item save in cart!! length = " + command.commandItems.length)
         localStorage.setItem('cartProducts', JSON.stringify(command));
-    }
-    function valider(){
-        let command = localStorage.getItem('cartProducts');
-        fetch
     }
 </script>
 </body>
