@@ -109,9 +109,11 @@
     <nav class="navbar bg-white app-nav-2">
         <div class="container">
             <h2 class="app-color">Logo</h2>
-            <form class="" role="search">
+            <form class="" role="search" th:action="@{findByCriteria}" method="post">
                 <div class="input-group">
-                    <input class="form-control me-2 app-outline" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2 app-outline" type="search" th:value="${productC.getName()}" name="name" placeholder="name" aria-label="Search">
+                    <input class="form-control me-2 app-outline" type="search" th:value="${productC.prixMin}" name="prixMin" placeholder="prixMin" aria-label="Search">
+                    <input class="form-control me-2 app-outline" type="search" th:value="${productC.getPrixMax()}" name="prixMax" placeholder="prixMax" aria-label="Search">
                     <button class="btn btn-sm app-btn" type="submit">Search</button>
                 </div>
             </form>

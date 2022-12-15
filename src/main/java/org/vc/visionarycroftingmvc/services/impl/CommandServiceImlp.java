@@ -153,6 +153,7 @@ public class CommandServiceImlp implements CommandService {
         command.getCommandItems().clear();
         command.setRef(UUID.randomUUID().toString());
         Command command1 = commandDao.save(command);
+
         commandItems.forEach(commandItem -> {
             commandItem.setCommand(command1);
             CommandItem item = commadItemService.save(commandItem);

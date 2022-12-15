@@ -10,6 +10,7 @@ import org.vc.visionarycroftingmvc.services.ClientService;
 import org.vc.visionarycroftingmvc.services.CommadItemService;
 import org.vc.visionarycroftingmvc.services.CommandService;
 import org.vc.visionarycroftingmvc.voDTO.ClientDto;
+import org.vc.visionarycroftingmvc.voDTO.ProductVo;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;

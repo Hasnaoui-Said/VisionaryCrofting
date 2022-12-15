@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,58 +8,70 @@
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js">
     <style>
-        .section-header{
+        .section-header {
             position: fixed;
             width: 100%;
             z-index: 10;
         }
-        .section-header *{
+
+        .section-header * {
             position: relative;
         }
-        main{
+
+        main {
             position: absolute;
             top: 103px;
             width: 100%;
         }
+
         main .content, footer {
             position: relative;
             width: 100%;
         }
-        .app-color{
+
+        .app-color {
             color: #4d0101;
         }
-        .app-orange{
+
+        .app-orange {
             color: #e35300;
         }
-        .app-dark-bleu{
+
+        .app-dark-bleu {
             color: #445268;
         }
-        .app-outline{
+
+        .app-outline {
             outline: solid 1px #4d0101
         }
-        .app-btn{
+
+        .app-btn {
             color: #4d0101 !important;
             outline: #4d0101 solid 1px !important;
             background-color: white !important;
             border-radius: 2px !important;
         }
-        .app-bg{
+
+        .app-bg {
             background-color: #4d0101;
         }
-        .app-bg-orange{
+
+        .app-bg-orange {
             background-color: #e35300;
         }
-        .app-bg-dark-bleu{
+
+        .app-bg-dark-bleu {
             background-color: #445268;
         }
-        .app-nav-2{
+
+        .app-nav-2 {
             border-bottom: #4d0101 solid .2px;
         }
     </style>
 </head>
 <body>
 <header class="section-header">
-    <nav class="navbar navbar-expand py-0 px-2 app-bg" >
+    <nav class="navbar navbar-expand py-0 px-2 app-bg">
         <div class="nav-item"><a class="nav-link text-white" href="/">logo</a></div>
         <div class="container-fluid">
             <ul class="navbar-nav d-none d-md-flex mr-auto text-white">
@@ -96,7 +107,8 @@
                 </li>
                 <li class="nav-item">
                     <a href="/shop" class="nav-link d-flex align-items-center text-white" data-abc="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-dash" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-cart-dash" viewBox="0 0 16 16">
                             <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/>
                             <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                         </svg>
@@ -124,123 +136,142 @@
 
         <div class="profile">
             <div class="card p-4">
-                <div class="card-header">List of products: </div>
-                <div class="table-responsive">
+                <div class="card-header">List of products:</div>
+                <div class="">
                     <table class="table">
                         <thead>
                         <th scope="col">#</th>
                         <th scope="col">ref</th>
                         <th scope="col">date</th>
-                        <th scope="col">Total</th>
+                        <th scope="col">Total($)</th>
                         <th scope="col">size items</th>
                         </thead>
                         <tbody>
-                        <tr th:each="command, i :${listCommands}">
-                            <td th:text="${i}"></td>
+                        <tr th:each="command:${listCommands}">
+                            <td th:text="${command.getId()}"></td>
                             <td th:text="${command.getRef()}"></td>
                             <td th:text="${command.getDateCommand()}"></td>
                             <td th:text="${command.getPrixTotal()}"></td>
-                            <td th:text="${command.getCommandItems().size()}"></td>
+                            <td>
+                                <div class="dropdown m-1">
+                                    <button class="m-1 btn app-btn dropdown-toggle" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">Items
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <ul th:each="item:${command.getCommandItems()}">
+                                            <a href="#"><div th:text="${'reference :'+item.getRef().substring(0, 5) + '...'}"></div></a>
+                                            <li><div th:text="${'quantity :'+item.getQuantity()}"></div></li>
+                                            <li><div th:text="${'price :'+item.getProduct().getPrix()}"></div></li>
+                                            <li><div th:text="${'refProduct :'+item.getProduct().getRef()}"></div></li>
+                                            <div><hr class="dropdown-divider"></div>
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
 
             </div>
+            <br><br><br><br><br><br><br>
         </div>
     </div>
 
-<footer class="section-footer app-bg-dark-bleu text-white mt-5 py-5">
-    <div class="container">
-        <section class="footer-top padding-y">
-            <div class="row">
-                <aside class="col-md-4">
-                    <article class="mr-3">
-                        <h5 class="title">About</h5>
-                        <p>Some short text about company like You might remember the Dell computer commercials in which a youth reports.</p>
-                        <ul class="list-icon">
-                            <li><i class="icon fa fa-map-marker"></i> 9870 St Vincent Place, Glasgow, DC 45 Fr 45.</li>
-                            <li><i class="icon fa fa-phone"></i> +1 (800) 123 4568</li>
-                            <li><i class="icon fa fa-envelope"></i>
-                                <a href="mailto:saidhasnaoui@gmail.com">
-                                    <i class="icon fa fa-envelope">envelope</i>
-                                </a>
-                            </li>
+    <br><br><br><br><br><br><br>
+    <footer class="section-footer app-bg-dark-bleu text-white mt-5 py-5">
+        <div class="container">
+            <section class="footer-top padding-y">
+                <div class="row">
+                    <aside class="col-md-4">
+                        <article class="mr-3">
+                            <h5 class="title">About</h5>
+                            <p>Some short text about company like You might remember the Dell computer commercials in
+                                which a youth reports.</p>
+                            <ul class="list-icon">
+                                <li><i class="icon fa fa-map-marker"></i> 9870 St Vincent Place, Glasgow, DC 45 Fr 45.
+                                </li>
+                                <li><i class="icon fa fa-phone"></i> +1 (800) 123 4568</li>
+                                <li><i class="icon fa fa-envelope"></i>
+                                    <a href="mailto:saidhasnaoui@gmail.com">
+                                        <i class="icon fa fa-envelope">envelope</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </article>
+                    </aside>
+                    <aside class="col-sm-3 col-md-2">
+                        <h5 class="title">Information</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Career</a></li>
+                            <li><a href="#">Find a store</a></li>
+                            <li><a href="#">Rules and terms</a></li>
+                            <li><a href="#">Sitemap</a></li>
                         </ul>
-                    </article>
-                </aside>
-                <aside class="col-sm-3 col-md-2">
-                    <h5 class="title">Information</h5>
-                    <ul class="list-unstyled">
-                        <li> <a href="#">About us</a></li>
-                        <li> <a href="#">Career</a></li>
-                        <li> <a href="#">Find a store</a></li>
-                        <li> <a href="#">Rules and terms</a></li>
-                        <li> <a href="#">Sitemap</a></li>
-                    </ul>
-                </aside>
-                <aside class="col-sm-3 col-md-2">
-                    <h5 class="title">My Account</h5>
-                    <ul class="list-unstyled">
-                        <li> <a href="#"> Contact us</a></li>
-                        <li> <a href="#">Money refund</a></li>
-                        <li> <a href="#">Order status</a></li>
-                        <li> <a href="#">Shipping info</a></li>
-                        <li> <a href="#">Open dispute</a></li>
-                    </ul>
-                </aside>
-                <aside class="col-sm-3  col-md-2">
-                    <h5 class="title">Service</h5>
-                    <ul class="list-unstyled">
-                        <li> <a href="#">Returns</a></li>
-                        <li> <a href="#">Product Support</a></li>
-                        <li> <a href="#">FAQ</a></li>
-                        <li> <a href="#">How To Buy</a></li>
-                        <li> <a href="#">Payment Method</a></li>
-                    </ul>
-                </aside>
-                <aside class="col-sm-3  col-md-2">
-                    <h5 class="title">Social</h5>
-                    <ul class="list-unstyled">
-                        <li> <a href="#"> Facebook </a></li>
-                        <li> <a href="#"> Twitter </a></li>
-                        <li> <a href="#"> Instagram </a></li>
-                        <li> <a href="#"> Youtube </a></li>
-                    </ul>
-                </aside>
-            </div>
-        </section>
-        <section class="footer-bottom row border-top-white">
-            <div class="col-md-2">
-                <p class="text-muted
+                    </aside>
+                    <aside class="col-sm-3 col-md-2">
+                        <h5 class="title">My Account</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#"> Contact us</a></li>
+                            <li><a href="#">Money refund</a></li>
+                            <li><a href="#">Order status</a></li>
+                            <li><a href="#">Shipping info</a></li>
+                            <li><a href="#">Open dispute</a></li>
+                        </ul>
+                    </aside>
+                    <aside class="col-sm-3  col-md-2">
+                        <h5 class="title">Service</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Returns</a></li>
+                            <li><a href="#">Product Support</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">How To Buy</a></li>
+                            <li><a href="#">Payment Method</a></li>
+                        </ul>
+                    </aside>
+                    <aside class="col-sm-3  col-md-2">
+                        <h5 class="title">Social</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#"> Facebook </a></li>
+                            <li><a href="#"> Twitter </a></li>
+                            <li><a href="#"> Instagram </a></li>
+                            <li><a href="#"> Youtube </a></li>
+                        </ul>
+                    </aside>
+                </div>
+            </section>
+            <section class="footer-bottom row border-top-white">
+                <div class="col-md-2">
+                    <p class="text-muted
                 "> &copy 2019 Visionary Crofting </p>
 
-            </div>
-            <div class="col-md-8 text-md-center">
-                <span  class="px-2">
+                </div>
+                <div class="col-md-8 text-md-center">
+                <span class="px-2">
                     <a href="#" class="text-muted">Terms and condition</a>
                 </span>
-                <span  class="px-2">
+                    <span class="px-2">
                     <a href="#" class="text-muted">Privacy policy</a>
                 </span>
-            </div>
-            <div class="col-md-2 text-md-right text-muted">
-                <i class="fab fa-lg fa-cc-visa"></i>
-                <i class="fab fa-lg fa-cc-paypal"></i>
-                <i class="fab fa-lg fa-cc-mastercard"></i>
-            </div>
-        </section>
-    </div>
-</footer>
+                </div>
+                <div class="col-md-2 text-md-right text-muted">
+                    <i class="fab fa-lg fa-cc-visa"></i>
+                    <i class="fab fa-lg fa-cc-paypal"></i>
+                    <i class="fab fa-lg fa-cc-mastercard"></i>
+                </div>
+            </section>
+        </div>
+    </footer>
 
 
 </main>
 
 <script>
 
-    function fetchProduct(e){
+    function fetchProduct(e) {
         const itemSet = (localStorage.getItem('cartProductsRef') === null);
-        if (itemSet)  {
+        if (itemSet) {
             console.log("Create carte Ref in local storage")
             // const cartProductsRef = {
             //     refs: []
@@ -255,22 +286,22 @@
 
         let message = "";
         let productRef = e.dataset.id;
-        cartProductsRef.products.forEach(product=>{
-            if (product.ref === productRef){
+        cartProductsRef.products.forEach(product => {
+            if (product.ref === productRef) {
                 message = "Item already in cart!!";
             }
         });
         if (message !== "")
             return alert(message);
-        if (confirm("Are You sure ? you want add to Cart?!!")){
-            cartProductsRef.products.push({ref:productRef, quantity:1});
+        if (confirm("Are You sure ? you want add to Cart?!!")) {
+            cartProductsRef.products.push({ref: productRef, quantity: 1});
             localStorage.setItem('cartProductsRef', JSON.stringify(cartProductsRef));
         }
     }
 
-    function addToCar(e){
+    function addToCar(e) {
         const itemSet = (localStorage.getItem('cartProducts') === null);
-        if (itemSet)  {
+        if (itemSet) {
             console.log("Create carte in local storage")
             const myCommand = {
                 client: {
@@ -297,15 +328,15 @@
             ref: ""
         }
         let message = "";
-        command.commandItems.forEach(item=>{
-            if (commandItem.product.ref === item.product.ref)  {
+        command.commandItems.forEach(item => {
+            if (commandItem.product.ref === item.product.ref) {
                 message = "Item already in cart!!";
             }
         });
         if (message !== "")
             return alert(message);
         console.log("Price Product " + commandItem.product.prix, typeof Number(commandItem.product.prix))
-        console.log("Quantity item " + commandItem.quantity, typeof  commandItem.quantity)
+        console.log("Quantity item " + commandItem.quantity, typeof commandItem.quantity)
         console.log("Price command after " + command.prixTotal, typeof command.prixTotal)
         commandItem.prix += Number(commandItem.product.prix) * commandItem.quantity;
         command.prixTotal += Number(commandItem.prix);
@@ -315,5 +346,6 @@
         localStorage.setItem('cartProducts', JSON.stringify(command));
     }
 </script>
+<script src="./webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
