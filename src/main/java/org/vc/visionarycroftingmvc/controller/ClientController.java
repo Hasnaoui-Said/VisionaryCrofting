@@ -5,16 +5,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.vc.visionarycroftingmvc.models.entity.Client;
+import org.vc.visionarycroftingmvc.models.entity.Command;
 import org.vc.visionarycroftingmvc.services.ClientService;
+import org.vc.visionarycroftingmvc.services.CommadItemService;
+import org.vc.visionarycroftingmvc.services.CommandService;
 import org.vc.visionarycroftingmvc.voDTO.ClientDto;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ClientController {
 
     @Autowired
     ClientService clientService;
+    @Autowired
+    CommandService commandService;
+    @GetMapping(path = {"/profile",})
+    public String profile(Model model, HttpSession session){
+        System.out.println("user session "+session.getAttribute("user"));
+        if (session.getAttribute("user") == null) return "index";
+        List<Command> commandList = commandService
+                .findAllByClientEmail(((ClientDto) session.getAttribute("user")).getEmail());
+        model.addAttribute("listCommands",commandList);
+        return "profile";
+    }
     @GetMapping(path = {"/sign-in",})
     public String formSignIn(Model model){
         model.addAttribute("client", new ClientDto());

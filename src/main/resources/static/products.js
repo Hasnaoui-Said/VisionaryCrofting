@@ -162,21 +162,39 @@ function saveChange(){
     localStorage.setItem('cartProductsRef', JSON.stringify(cartProductsRefUpdate));
 }
 function confirmCommand(){
-    if (!confirm("Are you sure?! You want to confirm command??")){
-        console.log("Not confirmed")
-        return ;
-    }
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    let command = JSON.parse(localStorage.getItem('cartProductsRef'));
+    console.log("click confirm command!")
     if (document.getElementById("user") == null){
         return alert("Please logon !!!!!............");
     }
+
+    let command = {
+        client: {email: null},
+        commandItems: []
+    }
+
     command.client.email = document.getElementById("user").innerText;
     if (command.client.email == null){
         return alert("Please logon !!!!!............");
     }
+    if (!confirm("Are you sure?! You want to confirm command??")){
+        console.log("Not confirmed")
+        return ;
+    }
+    let cartProductsRef = JSON.parse(localStorage.getItem('cartProductsRef'));
+    cartProductsRef.products.forEach((product, index)=>{
+        command.commandItems.push(
+            {
+                product: {
+                    ref: product.ref
+                },
+                quantity: product.quantity
+            }
+        );
+    });
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
     var raw = JSON.stringify(command);
 
     var requestOptions = {
@@ -186,10 +204,21 @@ function confirmCommand(){
         redirect: 'follow'
     };
 
-    fetch("http://localhost:9090/command/save", requestOptions)
+    fetch("http://localhost:9090/api/v1/command/", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
 
-    localStorage.removeItem('cartProducts');
+    localStorage.removeItem('cartProductsRef');
+    console.log("end confirm");
+}
+
+function generateString(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }

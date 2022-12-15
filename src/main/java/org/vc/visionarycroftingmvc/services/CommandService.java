@@ -18,9 +18,13 @@ public interface CommandService {
 
     Command save(Command command);
 
+    Command saveCommand(Command command);
+
     List<Command> getAllByClientEmail(String email);
 
     boolean existsByRef(String email);
 
     Command update(Command command);
+
+    List<Command> findAllByClientEmail(String email);
 }

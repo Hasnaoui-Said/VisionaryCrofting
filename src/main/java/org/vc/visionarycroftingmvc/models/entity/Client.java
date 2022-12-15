@@ -68,7 +68,6 @@ public class Client implements Serializable {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
-                ", commands=" + commands +
                 '}';
     }
 }

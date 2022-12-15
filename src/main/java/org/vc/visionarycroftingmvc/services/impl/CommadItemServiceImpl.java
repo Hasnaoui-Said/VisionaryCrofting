@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CommadItemServiceImpl implements CommadItemService {
@@ -47,12 +48,10 @@ public class CommadItemServiceImpl implements CommadItemService {
 
     @Override
     public CommandItem save(CommandItem commandItem) {
-        if (this.existsByRef(commandItem.getRef()))
-            return null;
-//            throw new BadRequestException("commandItem already exist with this parameter ref = " + commandItem.getRef());
         Product product = productService.findByRef(commandItem.getProduct().getRef());
         product.setQuantity(product.getQuantity() - commandItem.getQuantity());
         productService.update(product);
+        commandItem.setRef(UUID.randomUUID().toString());
         return commandItemDao.save(commandItem);
     }
 

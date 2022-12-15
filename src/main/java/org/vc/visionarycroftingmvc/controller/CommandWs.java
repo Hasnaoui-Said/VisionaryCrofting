@@ -19,7 +19,7 @@ public class CommandWs {
     @PostMapping("/")
     public ResponseEntity<ResponseObject<?>> save(@RequestBody Command command) {
         try {
-            Command create = commandService.save(command);
+            Command create = commandService.saveCommand(command);
             ResponseObject<Command> responseObject = new ResponseObject<>(true,
                     "Command Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
