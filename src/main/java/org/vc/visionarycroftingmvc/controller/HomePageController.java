@@ -29,8 +29,8 @@ public class HomePageController {
         model.addAttribute("productC", new ProductVo());
         return "index";
     }
-    @PostMapping(path = {"/findByCriteria"})
-    public String findByCriteria(Model model,@ModelAttribute("productC") ProductVo productC,
+    @GetMapping(path = {"/findByCriteria"})
+    public String findByCriteria(Model model, @ModelAttribute("productC") ProductVo productC,
                        @RequestParam(name = "page", defaultValue = "0") int page,
                        @RequestParam(name = "size", defaultValue = "20") int size){
         List<Product> listProduct = productService.findByCriteria(productC);
