@@ -10,8 +10,10 @@ import com.example.visionarycrofting.services.FournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -58,7 +60,7 @@ public class FournisseurWs {
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
-    @DeleteMapping("/name/{name}")
+    @DeleteMapping("/email/{email}")
     public ResponseEntity<ResponseObject<?>> deleteByEmail(@PathVariable String email) {
         int i = fournisseurService.deleteByEmail(email);
         boolean success = true;
@@ -69,9 +71,9 @@ public class FournisseurWs {
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
-    @DeleteMapping("/email/{email}")
-    public ResponseEntity<ResponseObject<?>> deleteByName(@PathVariable String email) {
-        int i = fournisseurService.deleteByName(email);
+    @DeleteMapping("/name/{name}")
+    public ResponseEntity<ResponseObject<?>> deleteByName(@PathVariable String name) {
+        int i = fournisseurService.deleteByName(name);
         boolean success = true;
         if (i != 0)
             success = false;
@@ -101,16 +103,18 @@ public class FournisseurWs {
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<ResponseObject<?>> save(@RequestBody Fournisseur fournisseur) {
+    @PostMapping("/")@ResponseBody
+    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Fournisseur fournisseur,
+                                                  BindingResult bindingResult
+                                                  ) {
         try {
             Fournisseur create = fournisseurService.save(fournisseur);
             ResponseObject<Fournisseur> responseObject = new ResponseObject<>(true,
                     "Command Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
         }catch (BadRequestException e){
-            ResponseObject<AppelOffre> responseObject = new ResponseObject<>(false,
-                    e.getMessage(), null);
+            ResponseObject<Throwable> responseObject = new ResponseObject<>(false,
+                    e.getMessage(), e.getCause());
             return new ResponseEntity<>(responseObject, HttpStatus.BAD_REQUEST);
         }
     }

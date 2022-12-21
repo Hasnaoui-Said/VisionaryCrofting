@@ -59,8 +59,8 @@ public class FournisseurServiceIml implements FournisseurService {
     public Fournisseur save(Fournisseur fournisseur) {
         if (this.existsByEmail(fournisseur.getEmail()))
             throw new BadRequestException("Email "+fournisseur.getEmail()+" is token");
-        if (validateEmail(fournisseur.getEmail()))
-            throw new BadRequestException("Email is not valid");
+//        if (validateEmail(fournisseur.getEmail()))
+//            throw new BadRequestException("Email is not valid");
         return fournisseurDao.save(fournisseur);
     }
     @Override

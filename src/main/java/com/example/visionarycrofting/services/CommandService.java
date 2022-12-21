@@ -23,5 +23,4 @@ public interface CommandService {
 
     boolean existsByRef(String email);
 
-    Command update(Command command);
 }

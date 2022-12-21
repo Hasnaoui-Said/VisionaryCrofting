@@ -75,8 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findByRef(String ref) {
-        Product product = productDao.findByRef(ref);
-        return product;
+        return productDao.findByRef(ref);
     }
 
     @Override
@@ -102,12 +101,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(Product product) {
-        if (stockService.existsByName(product.getStock().getName()))
-            throw new BadRequestException("Stock name is not valid");
-        Stock stock = stockService.findByName(product.getStock().getName());
-        product.setStock(stock);
         if (this.existsByRef(product.getRef()))
             throw new BadRequestException("Product ref not found");
+        if (stockService.existsByName(product.getStock().getName()))
+            throw new BadRequestException("Stock with this parameter name is not valid");
+        Stock stock = stockService.findByName(product.getStock().getName());
+        product.setStock(stock);
         return productDao.save(product);
     }
 
@@ -115,15 +114,13 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public Product update(Product product) {
         if (!this.existsByRef(product.getRef()))
-            throw new BadRequestException("Product ref already exist");
+            throw new BadRequestException("Product with this ref not found");
         Product byRef = this.findByRef(product.getRef());
-        if (product.getStock() != null) {
-            String nameStock = product.getStock().getName();
-            if (!nameStock.equals("")) {
-                Stock stock = stockService.findByName(nameStock);
-                if (stock != null || stock.getName() != nameStock)
-                    byRef.setStock(stock);
-            }
+        if (!product.getStock().getName().equals(byRef.getStock().getName())) {
+            Stock stock = stockService.findByName(product.getStock().getName());
+            if (stock == null)
+                throw new BadRequestException("Stock with this name not found");
+            byRef.setStock(stock);
         }
         if (product.getDescription() != null)
             byRef.setDescription(product.getDescription());

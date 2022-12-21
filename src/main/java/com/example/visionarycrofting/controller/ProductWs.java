@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -49,7 +50,7 @@ public class ProductWs {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseObject<?>> save(@RequestBody Product product) {
+    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Product product) {
         try {
             Product create = productService.save(product);
             ResponseObject<Product> responseObject = new ResponseObject<>(true,
@@ -64,7 +65,7 @@ public class ProductWs {
 
 
     @PutMapping("/")
-    public ResponseEntity<ResponseObject<?>> update(@RequestBody Product product) {
+    public ResponseEntity<ResponseObject<?>> update(@RequestBody @Valid Product product) {
         try {
             Product create = productService.update(product);
             ResponseObject<Product> responseObject = new ResponseObject<>(true,
