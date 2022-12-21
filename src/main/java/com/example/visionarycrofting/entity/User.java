@@ -11,6 +11,7 @@ import java.util.UUID;
 public class User implements Serializable {
     private UUID uuid;
     @Id
+    @Column(unique = true)
     @Size(min = 4, max = 20)
     private String username;
 
@@ -18,20 +19,21 @@ public class User implements Serializable {
     private String password;
     private String phone;
     private boolean active;
-    @OneToMany(mappedBy = "username")
-    private List<UsersRoles> usersRoles;
+    @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
+    private List<UsersRoles> roles;
     public User() {
     }
 
     @Override
     public String toString() {
         return "User{" +
+                "uuid=" + uuid +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", uuid='" + uuid + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
-                ", active='" + active + '\'' +
+                ", active=" + active +
+                ", usersRoles=" + roles +
                 '}';
     }
 
@@ -73,5 +75,25 @@ public class User implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public List<UsersRoles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UsersRoles> usersRoles) {
+        this.roles = usersRoles;
     }
 }

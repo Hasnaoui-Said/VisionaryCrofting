@@ -10,20 +10,21 @@ import java.util.Set;
 @Entity(name = "role")
 public class Role implements Serializable {
     @Id
-    private String role;
+    @Column(unique = true)
+    private String name;
     private String description;
     @OneToMany(mappedBy = "role")
-    private Set<UsersRoles> usersRoles;
+    private Set<UsersRoles> roles;
 
     public Role() {
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String role) {
+        this.name = role;
     }
 
     public String getDescription() {
@@ -35,19 +36,19 @@ public class Role implements Serializable {
     }
 
     @JsonIgnore
-    public Set<UsersRoles> getUsersRoles() {
-        return usersRoles;
+    public Set<UsersRoles> getRoles() {
+        return roles;
     }
 
     @JsonSetter
-    public void setUsersRoles(Set<UsersRoles> usersRoles) {
-        this.usersRoles = usersRoles;
+    public void setRoles(Set<UsersRoles> usersRoles) {
+        this.roles = usersRoles;
     }
 
     @Override
     public String toString() {
         return "Role{" +
-                ", role='" + role + '\'' +
+                ", role='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
