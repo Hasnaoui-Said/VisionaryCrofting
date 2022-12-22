@@ -29,6 +29,7 @@ public class UsersRoles implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
     public User getUsername() {
         return username;
     }
@@ -51,7 +52,6 @@ public class UsersRoles implements Serializable {
     public String toString() {
         return "UsersRoles{" +
                 "id=" + id +
-                ", username=" + username +
                 ", role=" + role +
                 '}';
     }

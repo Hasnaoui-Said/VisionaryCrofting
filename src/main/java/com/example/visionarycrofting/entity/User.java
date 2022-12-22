@@ -1,5 +1,7 @@
 package com.example.visionarycrofting.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -16,6 +18,7 @@ public class User implements Serializable {
     private String username;
 
     private String email;
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String phone;
     private boolean active;
