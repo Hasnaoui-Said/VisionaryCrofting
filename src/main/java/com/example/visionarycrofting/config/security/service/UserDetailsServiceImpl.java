@@ -1,7 +1,7 @@
-package com.example.visionarycrofting.config.service;
+package com.example.visionarycrofting.config.security.service;
 
 import com.example.visionarycrofting.entity.User;
-import com.example.visionarycrofting.repository.UserDao;
+import com.example.visionarycrofting.config.security.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserDao userDao;
-
     @Autowired
-    public UserDetailsServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    private UserDao userDao;
+
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User appUser = userDao.findByUsername(username);
+        User appUser = this.findByUsername(username);
         if (appUser == null)
             throw new UsernameNotFoundException("Username not found!!");
         Collection<GrantedAuthority> authorities = appUser.getRoles().stream()

@@ -1,10 +1,10 @@
 package com.example.visionarycrofting.services.impl;
 
-import com.example.visionarycrofting.entity.Fournisseur;
+import com.example.visionarycrofting.entity.Supplier;
 import com.example.visionarycrofting.exception.BadRequestException;
 import com.example.visionarycrofting.exception.NotFoundException;
-import com.example.visionarycrofting.repository.FournisseurDao;
-import com.example.visionarycrofting.services.FournisseurService;
+import com.example.visionarycrofting.repository.SupplierDao;
+import com.example.visionarycrofting.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import java.util.List;
 
 
 @Service
-public class FournisseurServiceIml implements FournisseurService {
-    private final FournisseurDao fournisseurDao;
+public class SupplierServiceIml implements SupplierService {
+    private final SupplierDao supplierDao;
 
     @Autowired
-    public FournisseurServiceIml(FournisseurDao fournisseurDao) {
-        this.fournisseurDao = fournisseurDao;
+    public SupplierServiceIml(SupplierDao supplierDao) {
+        this.supplierDao = supplierDao;
     }
 
     @Override
@@ -26,47 +26,47 @@ public class FournisseurServiceIml implements FournisseurService {
         if(!this.existsByEmail(email)) {
             throw new NotFoundException("Bayer with email: " + email + " does not exists");
         }
-        return fournisseurDao.deleteByEmail(email);
+        return supplierDao.deleteByEmail(email);
     }
 
     @Override
     public int deleteByName(String email) {
-        return fournisseurDao.deleteByName(email);
+        return supplierDao.deleteByName(email);
     }
 
     @Override
-    public Fournisseur findByEmail(String email) {
-        return fournisseurDao.findByEmail(email);
+    public Supplier findByEmail(String email) {
+        return supplierDao.findByEmail(email);
     }
 
     @Override
-    public Fournisseur findByName(String email) {
-        return fournisseurDao.findByName(email);
+    public Supplier findByName(String email) {
+        return supplierDao.findByName(email);
     }
 
     @Override
-    public List<Fournisseur> findAll() {
-        return fournisseurDao.findAll();
+    public List<Supplier> findAll() {
+        return supplierDao.findAll();
     }
 
     @Deprecated
     @Override
-    public Fournisseur getOne(Long aLong) {
-        return fournisseurDao.getOne(aLong);
+    public Supplier getOne(Long aLong) {
+        return supplierDao.getOne(aLong);
     }
 
     @Override
-    public Fournisseur save(Fournisseur fournisseur) {
+    public Supplier save(Supplier fournisseur) {
         if (this.existsByEmail(fournisseur.getEmail()))
             throw new BadRequestException("Email "+fournisseur.getEmail()+" is token");
 //        if (validateEmail(fournisseur.getEmail()))
 //            throw new BadRequestException("Email is not valid");
-        return fournisseurDao.save(fournisseur);
+        return supplierDao.save(fournisseur);
     }
     @Override
     @Transactional
-    public Fournisseur update(Fournisseur fournisseur) {
-        Fournisseur byEmail = this.findByEmail(fournisseur.getEmail());
+    public Supplier update(Supplier fournisseur) {
+        Supplier byEmail = this.findByEmail(fournisseur.getEmail());
         if (byEmail == null)
             throw new BadRequestException("Email is not valid");
         if (!fournisseur.getPassword().equals(""))
@@ -80,7 +80,7 @@ public class FournisseurServiceIml implements FournisseurService {
 
     @Override
     public boolean existsByEmail(String email) {
-        return fournisseurDao.existsByEmail(email);
+        return supplierDao.existsByEmail(email);
     }
 
     @Override

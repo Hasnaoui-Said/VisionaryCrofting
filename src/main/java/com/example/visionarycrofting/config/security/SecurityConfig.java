@@ -1,11 +1,12 @@
-package com.example.visionarycrofting.config;
+package com.example.visionarycrofting.config.security;
 
-import com.example.visionarycrofting.config.filter.JwtAuthenticationFilter;
-import com.example.visionarycrofting.config.filter.JwtAutorizationFilter;
-import com.example.visionarycrofting.config.service.UserDetailsServiceImpl;
+import com.example.visionarycrofting.config.security.filter.JwtAuthenticationFilter;
+import com.example.visionarycrofting.config.security.filter.JwtAutorizationFilter;
+import com.example.visionarycrofting.config.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,29 +25,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .authorizeRequests().antMatchers("**/client/**").hasAuthority("ROLE_CLIENT")
-//                .and()
-//                .authorizeRequests().antMatchers("/fournissour/**").hasAuthority("ROLE_SUPPLIER")
-//                .and()
-//                .authorizeRequests().antMatchers("/stock/**").hasAuthority("ROLE_ADMIN")
-//                .and()
-//                .exceptionHandling().accessDeniedPage("/403")
+                .exceptionHandling().accessDeniedPage("/403")
+                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .headers().frameOptions().disable()
-                .and()
-                .authorizeRequests().anyRequest().authenticated()
-                .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManagerBean()))
+                .and().headers().frameOptions().disable()
+                // 2 solution
+                // 1- use antMatchers
+                // 2- use annotation in application EnableGlobalMethodSecurity and any method PostAuthorize(hasAuth(''))
+                .and().authorizeRequests().antMatchers(HttpMethod.GET,"/**/supplier/**").hasAuthority("SUPPLIER")
+                .and().authorizeRequests().antMatchers("/**/jeton/**").permitAll()
+                .and().authorizeRequests().anyRequest().authenticated()
+                .and().addFilter(new JwtAuthenticationFilter(authenticationManagerBean()))
                 // notion middleware: filter second
                 .addFilterBefore(new JwtAutorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Bean

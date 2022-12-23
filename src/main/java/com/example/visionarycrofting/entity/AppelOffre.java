@@ -26,7 +26,7 @@ public class AppelOffre implements Serializable {
     @NotNull @NotEmpty
     private Stock stock;
     @ManyToOne
-    private Fournisseur fournisseur;
+    private Supplier supplier;
 
     //
 
@@ -82,12 +82,12 @@ public class AppelOffre implements Serializable {
         this.stock = stock;
     }
 
-    public Fournisseur getFournissour() {
-        return fournisseur;
+    public Supplier getSupplier() {
+        return supplier;
     }
 
-    public void setFournissour(Fournisseur fournisseur) {
-        this.fournisseur = fournisseur;
+    public void setSupplier(Supplier Supplier) {
+        this.supplier = Supplier;
     }
 
     @Override

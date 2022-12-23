@@ -11,8 +11,8 @@ import java.util.List;
 public interface AppelOffreDao extends JpaRepository<AppelOffre, Long> {
     AppelOffre findByRef(String ref);
     int deleteByRef(String ref);
-    List<AppelOffre> findAllByFournisseurName(String name);
-    List<AppelOffre> findAllByFournisseurEmail(String email);
+    List<AppelOffre> findAllBySupplierName(String name);
+    List<AppelOffre> findAllBySupplierEmail(String email);
     List<AppelOffre> findAllByStockEmail(String email);
     List<AppelOffre> findAllByStockName(String name);
     List<AppelOffre> findAllByStatus(StatusAppel statusAppel);

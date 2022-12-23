@@ -1,12 +1,11 @@
 package com.example.visionarycrofting.controller;
 
 import com.example.visionarycrofting.entity.AppelOffre;
-import com.example.visionarycrofting.entity.Command;
-import com.example.visionarycrofting.entity.Fournisseur;
+import com.example.visionarycrofting.entity.Supplier;
 import com.example.visionarycrofting.exception.BadRequestException;
 import com.example.visionarycrofting.modes.ResponseObject;
 import com.example.visionarycrofting.services.AppelOffreService;
-import com.example.visionarycrofting.services.FournisseurService;
+import com.example.visionarycrofting.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +16,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("${api.endpoint}/fournisseur")
-public class FournisseurWs {
+@RequestMapping("${api.endpoint}/supplier")
+public class SupplierWs {
     @Autowired
-    FournisseurService fournisseurService;
+    SupplierService supplierService;
     @Autowired
     AppelOffreService appelOffreService;
 
@@ -62,7 +61,7 @@ public class FournisseurWs {
 
     @DeleteMapping("/email/{email}")
     public ResponseEntity<ResponseObject<?>> deleteByEmail(@PathVariable String email) {
-        int i = fournisseurService.deleteByEmail(email);
+        int i = supplierService.deleteByEmail(email);
         boolean success = true;
         if (i != 0)
             success = false;
@@ -73,7 +72,7 @@ public class FournisseurWs {
 
     @DeleteMapping("/name/{name}")
     public ResponseEntity<ResponseObject<?>> deleteByName(@PathVariable String name) {
-        int i = fournisseurService.deleteByName(name);
+        int i = supplierService.deleteByName(name);
         boolean success = true;
         if (i != 0)
             success = false;
@@ -84,32 +83,32 @@ public class FournisseurWs {
 
     @GetMapping("/email/{email}")
     public ResponseEntity<ResponseObject<?>> findByEmail(@PathVariable String email) {
-        ResponseObject<Fournisseur> responseObject = new ResponseObject<>(true,
-                "Find all command item", fournisseurService.findByEmail(email));
+        ResponseObject<Supplier> responseObject = new ResponseObject<>(true,
+                "Find all command item", supplierService.findByEmail(email));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<ResponseObject<?>> findByName(@PathVariable String name) {
-        ResponseObject<Fournisseur> responseObject = new ResponseObject<>(true,
-                "Find all command item", fournisseurService.findByName(name));
+        ResponseObject<Supplier> responseObject = new ResponseObject<>(true,
+                "Find all command item", supplierService.findByName(name));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<ResponseObject<?>> findAll() {
-        ResponseObject<List<Fournisseur>> responseObject = new ResponseObject<>(true,
-                "Find all command item", fournisseurService.findAll());
+        ResponseObject<List<Supplier>> responseObject = new ResponseObject<>(true,
+                "Find all command item", supplierService.findAll());
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @PostMapping("/")@ResponseBody
-    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Fournisseur fournisseur,
+    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Supplier fournisseur,
                                                   BindingResult bindingResult
                                                   ) {
         try {
-            Fournisseur create = fournisseurService.save(fournisseur);
-            ResponseObject<Fournisseur> responseObject = new ResponseObject<>(true,
+            Supplier create = supplierService.save(fournisseur);
+            ResponseObject<Supplier> responseObject = new ResponseObject<>(true,
                     "Command Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
         }catch (BadRequestException e){
@@ -120,10 +119,10 @@ public class FournisseurWs {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseObject<?>> update(@RequestBody Fournisseur fournisseur) {
+    public ResponseEntity<ResponseObject<?>> update(@RequestBody Supplier fournisseur) {
         try {
-            Fournisseur create = fournisseurService.update(fournisseur);
-            ResponseObject<Fournisseur> responseObject = new ResponseObject<>(true,
+            Supplier create = supplierService.update(fournisseur);
+            ResponseObject<Supplier> responseObject = new ResponseObject<>(true,
                     "Command Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
         }catch (BadRequestException e){

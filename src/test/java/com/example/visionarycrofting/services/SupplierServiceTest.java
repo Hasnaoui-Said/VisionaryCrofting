@@ -1,10 +1,10 @@
 package com.example.visionarycrofting.services;
 
-import com.example.visionarycrofting.entity.Fournisseur;
+import com.example.visionarycrofting.entity.Supplier;
 import com.example.visionarycrofting.exception.BadRequestException;
 import com.example.visionarycrofting.exception.NotFoundException;
-import com.example.visionarycrofting.repository.FournisseurDao;
-import com.example.visionarycrofting.services.impl.FournisseurServiceIml;
+import com.example.visionarycrofting.repository.SupplierDao;
+import com.example.visionarycrofting.services.impl.SupplierServiceIml;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -22,26 +22,26 @@ import static org.mockito.Mockito.verify;
 
 
 @ExtendWith(MockitoExtension.class)
-class FournisseurServiceTest {
+class SupplierServiceTest {
 
 
     @Mock
-    private FournisseurDao mockDao;
-    private FournisseurService serviceTest;
+    private SupplierDao mockDao;
+    private SupplierService serviceTest;
 
     @BeforeEach
     void setUp() {
-        serviceTest = new FournisseurServiceIml(mockDao);
+        serviceTest = new SupplierServiceIml(mockDao);
     }
 
     @Test
-    void canIGetAllFournisseur() {
+    void canIGetAllSupplier() {
         serviceTest.findAll();
         verify(mockDao).findAll();
     }
 
     @Test
-    void canNotDeleteFournisseurByEmail() {
+    void canNotDeleteSupplierByEmail() {
         String email = "hamza@gmail.com";
 
         given(mockDao.existsByEmail(email)).willReturn(false);
@@ -49,7 +49,7 @@ class FournisseurServiceTest {
     }
 
     @Test
-    void canDeleteFournisseurByEmail() {
+    void canDeleteSupplierByEmail() {
         String email = "hamza@gmail.com";
 
         given(mockDao.existsByEmail(email)).willReturn(true);
@@ -80,7 +80,7 @@ class FournisseurServiceTest {
 
     @Test
     void canIAddFournissour() {
-        Fournisseur fournisseur = new Fournisseur();
+        Supplier fournisseur = new Supplier();
         fournisseur.setName("hamza");
         fournisseur.setEmail("hamza@gmail.com");
         fournisseur.setPassword("AZERTY");
@@ -88,15 +88,15 @@ class FournisseurServiceTest {
 
         serviceTest.save(fournisseur);
 
-        ArgumentCaptor<Fournisseur> fournisseurArgumentCaptor = ArgumentCaptor.forClass(Fournisseur.class);
+        ArgumentCaptor<Supplier> fournisseurArgumentCaptor = ArgumentCaptor.forClass(Supplier.class);
         verify(mockDao).save(fournisseurArgumentCaptor.capture());
-        Fournisseur capture = fournisseurArgumentCaptor.getValue();
+        Supplier capture = fournisseurArgumentCaptor.getValue();
         assertThat(capture).isEqualTo(fournisseur);
     }
 
     @Test
-    void canNotAddFournissourEmailToken() {
-        Fournisseur fournisseur = new Fournisseur();
+    void canNotAddSupplierEmailToken() {
+        Supplier fournisseur = new Supplier();
         fournisseur.setName("hamza");
         fournisseur.setEmail("hamza@gmail.com");
         fournisseur.setPassword("AZERTY");
@@ -108,8 +108,8 @@ class FournisseurServiceTest {
     }
 
     @Test
-    void canNotAddFournissourWithEmailNotValid() {
-        Fournisseur fournisseur = new Fournisseur();
+    void canNotAddSupplierWithEmailNotValid() {
+        Supplier fournisseur = new Supplier();
         fournisseur.setName("hamza");
         fournisseur.setEmail("");
         fournisseur.setPassword("AZERTY");

@@ -9,8 +9,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity(name = "fournisseur")
-public class Fournisseur implements Serializable {
+@Entity(name = "supplier")
+public class Supplier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -21,10 +21,10 @@ public class Fournisseur implements Serializable {
     private String email;
     private String password;
     private String phone;
-    @OneToMany(mappedBy = "fournisseur")
+    @OneToMany(mappedBy = "supplier")
     private List<AppelOffre> appelOffres;
 
-    public Fournisseur() {
+    public Supplier() {
     }
 
     public Long getId() {
