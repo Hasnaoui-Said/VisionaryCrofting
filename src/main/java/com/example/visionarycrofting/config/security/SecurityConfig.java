@@ -1,5 +1,6 @@
 package com.example.visionarycrofting.config.security;
 
+import com.example.visionarycrofting.config.security.exception.AccessDeniedExceptionHandler;
 import com.example.visionarycrofting.config.security.filter.JwtAuthenticationFilter;
 import com.example.visionarycrofting.config.security.filter.JwtAutorizationFilter;
 import com.example.visionarycrofting.config.security.service.UserDetailsServiceImpl;
@@ -36,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().headers().frameOptions().disable()
+                .and()// Exception handler
+                .exceptionHandling().accessDeniedHandler(new AccessDeniedExceptionHandler())
                 // 2 solution
                 // 1- use antMatchers
                 // 2- use annotation in application EnableGlobalMethodSecurity and any method PostAuthorize(hasAuth(''))

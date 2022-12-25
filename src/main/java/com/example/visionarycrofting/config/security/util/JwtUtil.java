@@ -1,4 +1,4 @@
-package com.example.visionarycrofting.config.security;
+package com.example.visionarycrofting.config.security.util;
 
 public class JwtUtil {
     public static final String SECRET = "myKey1234";

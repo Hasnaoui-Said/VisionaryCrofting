@@ -2,7 +2,7 @@ package com.example.visionarycrofting.config.security.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.visionarycrofting.config.security.JwtUtil;
+import com.example.visionarycrofting.config.security.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

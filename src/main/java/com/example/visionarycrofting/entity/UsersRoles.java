@@ -38,7 +38,6 @@ public class UsersRoles implements Serializable {
         this.username = username;
     }
 
-    @JsonIgnore
     public Role getRole() {
         return role;
     }
