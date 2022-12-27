@@ -7,7 +7,6 @@ import com.example.visionarycrofting.config.security.service.UserDetailsServiceI
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,17 +35,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().headers().frameOptions().disable()
                 .and()// Exception handler
                 .exceptionHandling().accessDeniedHandler(new AccessDeniedExceptionHandler())
                 // 2 solution
                 // 1- use antMatchers
                 // 2- use annotation in application EnableGlobalMethodSecurity and any method PostAuthorize(hasAuth(''))
-                .and().authorizeRequests().antMatchers(HttpMethod.GET,"/**/supplier/**").hasAuthority("SUPPLIER")
-                .and().authorizeRequests().antMatchers("/**/jeton/**").permitAll()
-                .and().authorizeRequests().anyRequest().authenticated()
+                .and().authorizeRequests()
+                .antMatchers("/**/client/**", "/**/command/**", "/**/product/**", "/**/offer/**", "/**/command-item/**", "/**/stock/**", "/**/supplier/**").hasAuthority("ADMIN")
+                .antMatchers( "/**/product/**", "/**/offer/**").hasAuthority("MANAGER")
+                .antMatchers("/**/stock/**", "/**/supplier/**").hasAuthority("MANAGER")
+                .antMatchers("/**/stock/**", "/**/supplier/**").hasAnyAuthority()
+                .antMatchers( "/**/offer/**").hasAuthority("SUPPLIER")
+                .antMatchers("/**/command/**", "/**/product/**").hasAuthority("CLIENT")
+                .antMatchers("/**/jeton/**").permitAll()
+                // any request accused with authenticated
+                .anyRequest().authenticated()
+                // integrate filter to my app
                 .and().addFilter(new JwtAuthenticationFilter(authenticationManagerBean()))
-                // notion middleware: filter second
+                // notion middleware: filter second->  communique with other app as a passerelle
                 .addFilterBefore(new JwtAutorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }

@@ -1,5 +1,6 @@
 package com.example.visionarycrofting.entity;
 
+import com.example.visionarycrofting.config.security.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 

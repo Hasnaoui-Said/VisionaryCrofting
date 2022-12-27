@@ -101,7 +101,7 @@ public class StockWs {
     @GetMapping("/")
     public ResponseEntity<ResponseObject<?>>  getAll() {
         ResponseObject<List<Stock>> responseObject = new ResponseObject<>(true,
-                "Find all command item", stockService.findAll());
+                "Find all Stock", stockService.findAll());
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 

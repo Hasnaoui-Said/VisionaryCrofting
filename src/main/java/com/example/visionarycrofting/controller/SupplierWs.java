@@ -23,7 +23,7 @@ public class SupplierWs {
     @Autowired
     AppelOffreService appelOffreService;
 
-    @GetMapping("/offer/fournisseur/{email}/valid/{ref}")
+    @GetMapping("/offer/{email}/valid/{ref}")
     public ResponseEntity<ResponseObject<?>> validOffer(@PathVariable String email, @PathVariable String ref) {
         try {
             AppelOffre create = appelOffreService.valideeOffre(email, ref);
@@ -103,11 +103,9 @@ public class SupplierWs {
     }
 
     @PostMapping("/")@ResponseBody
-    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Supplier fournisseur,
-                                                  BindingResult bindingResult
-                                                  ) {
+    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Supplier supplier, BindingResult bindingResult) {
         try {
-            Supplier create = supplierService.save(fournisseur);
+            Supplier create = supplierService.save(supplier);
             ResponseObject<Supplier> responseObject = new ResponseObject<>(true,
                     "Command Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
@@ -119,9 +117,9 @@ public class SupplierWs {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseObject<?>> update(@RequestBody Supplier fournisseur) {
+    public ResponseEntity<ResponseObject<?>> update(@RequestBody Supplier supplier) {
         try {
-            Supplier create = supplierService.update(fournisseur);
+            Supplier create = supplierService.update(supplier);
             ResponseObject<Supplier> responseObject = new ResponseObject<>(true,
                     "Command Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);

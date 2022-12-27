@@ -20,7 +20,9 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 
 public class JwtAutorizationFilter extends OncePerRequestFilter {
+
     @Override
+    // any request this method execute et verify sign of user
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("doFilterInternal");
         System.out.println(request.getServletPath());
@@ -37,14 +39,16 @@ public class JwtAutorizationFilter extends OncePerRequestFilter {
                     JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
                     String username = decodedJWT.getSubject();
-                    String[] roles = decodedJWT.getClaim("authority").asArray(String.class);
+                    String[] roles = decodedJWT.getClaim(JwtUtil.AUTHORITIES).asArray(String.class);
                     Collection<GrantedAuthority> authorities = new ArrayDeque<>();
                     for (String role : roles) {
                         authorities.add(new SimpleGrantedAuthority(role));
                     }
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    // Authenticate user
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    // do it!, next
                     filterChain.doFilter(request, response);
 
                 } catch (Exception e) {
@@ -53,6 +57,7 @@ public class JwtAutorizationFilter extends OncePerRequestFilter {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }
             } else {
+                // verify if this resources required an authentication
                 filterChain.doFilter(request, response);
             }
         }

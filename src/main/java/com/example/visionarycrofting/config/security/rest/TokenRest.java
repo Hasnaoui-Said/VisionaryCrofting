@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.visionarycrofting.config.security.util.JwtUtil;
 import com.example.visionarycrofting.config.security.service.UserDetailsServiceImpl;
-import com.example.visionarycrofting.entity.User;
+import com.example.visionarycrofting.config.security.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,13 +44,13 @@ public class TokenRest {
 
                 String jwtSuccessToken = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + JwtUtil.EXPIRED_JETON * 10))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + JwtUtil.EXPIRED_JETON))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("authority", authorities)
                         .sign(algorithm);
                 String refreshJeton = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + JwtUtil.EXPIRED_JETON * 100))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + JwtUtil.EXPIRED_JETON))
                         .withIssuer(request.getRequestURL().toString())
                         .sign(algorithm);
                 Map<String, String> jeton = new HashMap<>();

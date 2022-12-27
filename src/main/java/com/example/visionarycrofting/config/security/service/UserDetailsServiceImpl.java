@@ -1,6 +1,6 @@
 package com.example.visionarycrofting.config.security.service;
 
-import com.example.visionarycrofting.entity.User;
+import com.example.visionarycrofting.config.security.entity.User;
 import com.example.visionarycrofting.config.security.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userDao.findByUsernameOrEmail(username);
     }
 
+    // fetch user by username or email and list of authorities , check password before apply to successfulAuthentication
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Look up the user in the database by username or email
