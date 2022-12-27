@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -69,20 +66,16 @@ public class CommandServiceImlp implements CommandService {
         }
         Client client = clientService.findByEmail(emailClient);
         command.setClient(client);
-        if (commandDao.existsByRef(command.getRef())) return null;
-        if (command.getCommandItems().size() == 0) {
-            throw new BadRequestException("Add command items");
-        }
-        List<CommandItem> commandItems = command.getCommandItems().stream().filter(item ->
-                        !commadItemService.existsByRef(item.getRef())
-                ).collect(Collectors.toList())
-                .stream().filter(commandItem -> commandItem.getQuantity() > 0
-                        && productService.findByRef(commandItem.getProduct().getRef()).getQuantity() >= commandItem.getQuantity()
-                ).collect(Collectors.toList())
+        if (commandDao.existsByRef(command.getRef()))
+            throw new BadRequestException("Ref exist already!!");
+
+        List<CommandItem> commandItems = command.getCommandItems()
                 .stream().filter(item -> {
                             boolean exists = productService.existsByRef(item.getProduct().getRef());
                             if (exists) {
                                 Product product = productService.findByRef(item.getProduct().getRef());
+                                Boolean qua = product.getQuantity() >= item.getQuantity();
+                                if (!qua) return false;
                                 item.setProduct(product);
                                 item.setPrix(product.getPrix());
                             }
@@ -90,18 +83,19 @@ public class CommandServiceImlp implements CommandService {
                         }
                 ).collect(Collectors.toList());
 
-        if (commandItems.size() == 0) {
-            throw new BadRequestException("Error, doesn't exist");
-        }
+        if (commandItems.size() == 0)
+            throw new BadRequestException("Error, command items null");
+
         // Calculi total
         commandItems.forEach(item -> {
             double productPrix = productService.findByRef(item.getProduct().getRef()).getPrix() * item.getQuantity();
-            double prix = productPrix;
-            command.setPrixTotal(command.getPrixTotal() + prix);
+            command.setPrixTotal(command.getPrixTotal() + productPrix);
         });
+        command.setDateCommand(new Date());
+        command.getCommandItems().clear();
+        command.setRef(UUID.randomUUID().toString());
         Command command1 = commandDao.save(command);
-        command1.setDateCommand(new Date());
-        command1.getCommandItems().clear();
+
         commandItems.stream().forEach(commandItem -> {
             commandItem.setCommand(command1);
             CommandItem item = commadItemService.save(commandItem);
@@ -121,8 +115,4 @@ public class CommandServiceImlp implements CommandService {
         return commandDao.existsByRef(ref);
     }
 
-    @Override
-    public Command update(Command command) {
-        return null;
-    }
 }

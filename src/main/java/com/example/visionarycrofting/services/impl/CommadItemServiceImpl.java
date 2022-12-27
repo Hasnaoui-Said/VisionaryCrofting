@@ -6,11 +6,13 @@ import com.example.visionarycrofting.exception.BadRequestException;
 import com.example.visionarycrofting.repository.CommandItemDao;
 import com.example.visionarycrofting.services.CommadItemService;
 import com.example.visionarycrofting.services.ProductService;
+import org.hibernate.service.UnknownUnwrapTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CommadItemServiceImpl implements CommadItemService {
@@ -53,6 +55,7 @@ public class CommadItemServiceImpl implements CommadItemService {
         Product product = productService.findByRef(commandItem.getProduct().getRef());
         product.setQuantity(product.getQuantity() - commandItem.getQuantity());
         productService.update(product);
+        commandItem.setRef(UUID.randomUUID().toString());
         return commandItemDao.save(commandItem);
     }
 

@@ -1,14 +1,14 @@
 package com.example.visionarycrofting.services.impl;
 
 import com.example.visionarycrofting.entity.AppelOffre;
-import com.example.visionarycrofting.entity.Fournisseur;
 import com.example.visionarycrofting.entity.Product;
 import com.example.visionarycrofting.entity.Stock;
+import com.example.visionarycrofting.entity.Supplier;
 import com.example.visionarycrofting.enumeration.StatusAppel;
 import com.example.visionarycrofting.exception.BadRequestException;
 import com.example.visionarycrofting.repository.AppelOffreDao;
 import com.example.visionarycrofting.services.AppelOffreService;
-import com.example.visionarycrofting.services.FournisseurService;
+import com.example.visionarycrofting.services.SupplierService;
 import com.example.visionarycrofting.services.ProductService;
 import com.example.visionarycrofting.services.StockService;
 import com.example.visionarycrofting.util.StringUtil;
@@ -27,7 +27,7 @@ public class AppelOffreServiceImpl implements AppelOffreService {
     @Autowired
     ProductService productService;
     @Autowired
-    FournisseurService fournisseurService;
+    SupplierService fournisseurService;
 
     @Override
     public List<AppelOffre> findAll() {
@@ -46,12 +46,12 @@ public class AppelOffreServiceImpl implements AppelOffreService {
 
     @Override
     public List<AppelOffre> findAllByFournisseurName(String name) {
-        return appelOffreDao.findAllByFournisseurName(name);
+        return appelOffreDao.findAllBySupplierName(name);
     }
 
     @Override
     public List<AppelOffre> findAllByFournisseurEmail(String email) {
-        return appelOffreDao.findAllByFournisseurEmail(email);
+        return appelOffreDao.findAllBySupplierEmail(email);
     }
 
     @Override
@@ -134,11 +134,11 @@ public class AppelOffreServiceImpl implements AppelOffreService {
     public AppelOffre valideeOffre(String email, String ref) {
         if (!fournisseurService.existsByEmail(email))
             throw new BadRequestException("Offer not found whit this ref");
-        Fournisseur fournisseur = fournisseurService.findByEmail(email);
+        Supplier fournisseur = fournisseurService.findByEmail(email);
         AppelOffre offre = this.findByRef(ref);
         if (offre == null)
             throw new BadRequestException("Offer not found whit this ref");
-        offre.setFournissour(fournisseur);
+        offre.setSupplier(fournisseur);
         offre.setStatus(StatusAppel.validee);
         return offre;
     }
@@ -196,12 +196,12 @@ public class AppelOffreServiceImpl implements AppelOffreService {
 
     @Override
     public List<AppelOffre> getOffersByName(String name) {
-        return appelOffreDao.findAllByFournisseurName(name);
+        return appelOffreDao.findAllBySupplierName(name);
     }
 
     @Override
     public List<AppelOffre> getOffersByEmail(String email) {
-        return appelOffreDao.findAllByFournisseurEmail(email);
+        return appelOffreDao.findAllBySupplierEmail(email);
     }
 
 }

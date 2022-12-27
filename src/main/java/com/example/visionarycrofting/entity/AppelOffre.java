@@ -3,6 +3,9 @@ package com.example.visionarycrofting.entity;
 import com.example.visionarycrofting.enumeration.StatusAppel;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity(name = "appelOffre")
@@ -10,15 +13,20 @@ public class AppelOffre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
+    @NotEmpty
     private String ref;
     @Enumerated(value = EnumType.STRING)
     private StatusAppel status;
-    private int quantity;
+    @NotNull @NotEmpty @Size(min = 1)
+    private Integer quantity;
+    @NotNull @NotEmpty
     private String refProduct;
     @ManyToOne
+    @NotNull @NotEmpty
     private Stock stock;
     @ManyToOne
-    private Fournisseur fournisseur;
+    private Supplier supplier;
 
     //
 
@@ -50,11 +58,11 @@ public class AppelOffre implements Serializable {
         this.status = status;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -74,12 +82,12 @@ public class AppelOffre implements Serializable {
         this.stock = stock;
     }
 
-    public Fournisseur getFournissour() {
-        return fournisseur;
+    public Supplier getSupplier() {
+        return supplier;
     }
 
-    public void setFournissour(Fournisseur fournisseur) {
-        this.fournisseur = fournisseur;
+    public void setSupplier(Supplier Supplier) {
+        this.supplier = Supplier;
     }
 
     @Override

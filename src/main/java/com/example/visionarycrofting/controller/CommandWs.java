@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -32,28 +34,14 @@ public class CommandWs {
         if (i != 0)
             success = false;
         ResponseObject<Integer> responseObject = new ResponseObject<>(success,
-                "Find By ref", i);
+                "Delete By ref", i);
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseObject<?>> save(@RequestBody Command command) {
+    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Command command) {
         try {
             Command create = commandService.save(command);
-            ResponseObject<Command> responseObject = new ResponseObject<>(true,
-                    "Command Created Successfully", create);
-            return new ResponseEntity<>(responseObject, HttpStatus.OK);
-        }catch (BadRequestException e){
-            ResponseObject<AppelOffre> responseObject = new ResponseObject<>(false,
-                    e.getMessage(), null);
-            return new ResponseEntity<>(responseObject, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping("/")
-    public ResponseEntity<ResponseObject<?>> update(@RequestBody Command command) {
-        try {
-            Command create = commandService.update(command);
             ResponseObject<Command> responseObject = new ResponseObject<>(true,
                     "Command Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
@@ -84,8 +72,4 @@ public class CommandWs {
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
-//    @GetMapping("/exist/{ref}")
-//    public boolean existsByEmail(@PathVariable String ref) {
-//        return commandService.existsByRef(ref);
-//    }
 }

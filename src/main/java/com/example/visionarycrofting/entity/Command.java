@@ -3,6 +3,8 @@ package com.example.visionarycrofting.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -12,13 +14,18 @@ public class Command implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
+    @NotEmpty
     private String ref;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date dateCommand;
+
     private double prixTotal;
     @ManyToOne
+    @NotNull @NotEmpty @Valid
     private Client client;
     @OneToMany(mappedBy = "command")
+    @NotNull @NotEmpty @Valid
     private List<CommandItem> commandItems;
 
     //

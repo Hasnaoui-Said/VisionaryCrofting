@@ -8,17 +8,20 @@ import com.example.visionarycrofting.services.AppelOffreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("${api.endpoint}/appel-offre")
+@RequestMapping("${api.endpoint}/offer")
 public class AppelOffreWs {
     @Autowired
     AppelOffreService appelOffreService;
 
     @GetMapping("/")
+//    @PostAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ResponseObject<?>> getAll() {
         ResponseObject<List<AppelOffre>> responseObject = new ResponseObject<>(true,
                 "Find all offer", appelOffreService.findAll());
@@ -47,7 +50,7 @@ public class AppelOffreWs {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseObject<?>> save(@RequestBody AppelOffre appelOffre) {
+    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid AppelOffre appelOffre) {
         try {
             AppelOffre create = appelOffreService.save(appelOffre);
             ResponseObject<AppelOffre> responseObject = new ResponseObject<>(true,
@@ -61,7 +64,7 @@ public class AppelOffreWs {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseObject<?>> update(@RequestBody AppelOffre appelOffre) {
+    public ResponseEntity<ResponseObject<?>> update(@RequestBody @Valid AppelOffre appelOffre) {
         try {
             AppelOffre create = appelOffreService.update(appelOffre);
             ResponseObject<AppelOffre> responseObject = new ResponseObject<>(true,

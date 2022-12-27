@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -99,12 +101,12 @@ public class StockWs {
     @GetMapping("/")
     public ResponseEntity<ResponseObject<?>>  getAll() {
         ResponseObject<List<Stock>> responseObject = new ResponseObject<>(true,
-                "Find all command item", stockService.findAll());
+                "Find all Stock", stockService.findAll());
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseObject<?>>  save(@RequestBody Stock stock) {
+    public ResponseEntity<ResponseObject<?>>  save(@RequestBody @Valid Stock stock) {
         try {
             Stock create = stockService.save(stock);
             ResponseObject<Stock> responseObject = new ResponseObject<>(true,
@@ -118,7 +120,7 @@ public class StockWs {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseObject<?>>  update(@RequestBody Stock stock) {
+    public ResponseEntity<ResponseObject<?>>  update(@RequestBody @Valid Stock stock) {
         try {
             Stock create = stockService.update(stock);
             ResponseObject<Stock> responseObject = new ResponseObject<>(true,

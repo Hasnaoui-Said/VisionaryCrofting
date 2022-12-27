@@ -4,6 +4,9 @@ import com.example.visionarycrofting.enumeration.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,12 +15,15 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
+    @NotEmpty
     private String ref;
     private String name;
     private double prix;
     private String description;
     private int quantity;
     @ManyToOne
+    @NotNull @NotEmpty @Valid
     private Stock stock;
     @Enumerated(value = EnumType.STRING)
     private Category category;
@@ -112,7 +118,6 @@ public class Product implements Serializable {
                 ", quantity=" + quantity +
                 ", stock=" + stock +
                 ", category=" + category +
-                ", stock=" + stock +
                 '}';
     }
 }

@@ -8,29 +8,14 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "stock")
+@Table(name = "supplier")
 @PrimaryKeyJoinColumn(name = "username")
-public class Stock extends User implements Serializable {
-
-    @OneToMany(mappedBy = "stock")
-    private List<Product> products;
-
-    @OneToMany(mappedBy = "stock")
+public class Supplier extends User implements Serializable {
+    @OneToMany(mappedBy = "supplier")
     private List<AppelOffre> appelOffres;
 
     private String name;
-    private String address;
-
-    public Stock() {
-    }
-
-    @JsonIgnore
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public Supplier() {
     }
 
     @JsonIgnore
@@ -48,14 +33,6 @@ public class Stock extends User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     @Override

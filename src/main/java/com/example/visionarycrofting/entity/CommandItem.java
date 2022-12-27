@@ -3,6 +3,10 @@ package com.example.visionarycrofting.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity(name = "commandItem")
@@ -13,9 +17,12 @@ public class CommandItem implements Serializable {
     private String ref;
     private double prix;
     @ManyToOne
+    @NotNull
+    @NotEmpty @Valid
     private Product product;
     @ManyToOne
     private Command command;
+    @NotNull @NotEmpty @Min(1)
     private int quantity;
 
     //

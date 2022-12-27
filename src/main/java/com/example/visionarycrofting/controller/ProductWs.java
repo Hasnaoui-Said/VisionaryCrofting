@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,13 +23,17 @@ public class ProductWs {
     ProductService productService;
 
     @GetMapping("/prix/{prix}")
-    public List<Product> findByPrixGreaterThanEqual(long prix) {
-        return productService.findByPrixGreaterThanEqual(prix);
+    public ResponseEntity<ResponseObject<?>> findByPrixGreaterThanEqual(long prix) {
+        ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
+                "findByPrixGreaterThanEqual", productService.findByPrixGreaterThanEqual(prix));
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @GetMapping("/ref/{ref}")
-    public Product findByRef(String ref) {
-        return productService.findByRef(ref);
+    public ResponseEntity<ResponseObject<?>> findByRef(String ref) {
+        ResponseObject<Product> responseObject = new ResponseObject<>(true,
+                "findByRef", productService.findByRef(ref));
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @DeleteMapping("/ref/{ref}")
@@ -37,23 +42,25 @@ public class ProductWs {
     }
 
     @GetMapping("/")
-    public List<Product> findAll() {
-        return productService.findAll();
+    public ResponseEntity<ResponseObject<?>> findAll() {
+        ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
+                "Find all products", productService.findAll());
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @PostMapping("/findByCriteria")
     public ResponseEntity<ResponseObject<?>> findByCriteria(@RequestBody ProductVo product) {
         ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
-                "Find all command item", productService.findByCriteria(product));
+                "find By Criteria", productService.findByCriteria(product));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseObject<?>> save(@RequestBody Product product) {
+    public ResponseEntity<ResponseObject<?>> save(@RequestBody @Valid Product product) {
         try {
             Product create = productService.save(product);
             ResponseObject<Product> responseObject = new ResponseObject<>(true,
-                    "Command Created Successfully", create);
+                    "Product Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
         } catch (BadRequestException e) {
             ResponseObject<AppelOffre> responseObject = new ResponseObject<>(false,
@@ -64,11 +71,11 @@ public class ProductWs {
 
 
     @PutMapping("/")
-    public ResponseEntity<ResponseObject<?>> update(@RequestBody Product product) {
+    public ResponseEntity<ResponseObject<?>> update(@RequestBody @Valid Product product) {
         try {
             Product create = productService.update(product);
             ResponseObject<Product> responseObject = new ResponseObject<>(true,
-                    "Command Created Successfully", create);
+                    "Product Created Successfully", create);
             return new ResponseEntity<>(responseObject, HttpStatus.OK);
         } catch (BadRequestException e) {
             ResponseObject<AppelOffre> responseObject = new ResponseObject<>(false,
@@ -80,35 +87,35 @@ public class ProductWs {
     @GetMapping("/name/{name}/prix/{prix}")
     public ResponseEntity<ResponseObject<?>> findByNameAndPrixGreaterThanEqual(@PathVariable String name, @PathVariable long prix) {
         ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
-                "Find all command item", productService.findByNameAndPrixGreaterThanEqual(name, prix));
+                "find By Name And Price Greater Than Equal", productService.findByNameAndPrixGreaterThanEqual(name, prix));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}/quantity/{q}")
     public ResponseEntity<ResponseObject<?>> findByNameAndQuantityGreaterThanEqual(@PathVariable String name, @PathVariable int q) {
         ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
-                "Find all command item", productService.findByNameAndQuantityGreaterThanEqual(name, q));
+                "findByNameAndQuantityGreaterThanEqual", productService.findByNameAndQuantityGreaterThanEqual(name, q));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @GetMapping("/stock/email/{email}")
     public ResponseEntity<ResponseObject<?>> findByStockEmail(@PathVariable String email) {
         ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
-                "Find all command item", productService.findByStockEmail(email));
+                "findByStockEmail", productService.findByStockEmail(email));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @GetMapping("/stock/name/{name}")
     public ResponseEntity<ResponseObject<?>> findByStockName(@PathVariable String name) {
         ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
-                "Find all command item", productService.findByStockName(name));
+                "findByStockName", productService.findByStockName(name));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
     @GetMapping("/category/{category}")
     public ResponseEntity<ResponseObject<?>> findByCategory(@PathVariable Category category) {
         ResponseObject<List<Product>> responseObject = new ResponseObject<>(true,
-                "Find all command item", productService.findByCategory(category));
+                "findByCategory", productService.findByCategory(category));
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 }
